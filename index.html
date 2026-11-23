@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atelier Voyage — Bespoke Journeys, Composed by Hand</title>
+<meta name="description" content="Atelier Voyage designs private, hand-composed journeys for discerning travellers. Curated destinations, transparent planning, 24/7 concierge." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F6F1E8;
+  --cream-2:#EFE7DA;
+  --paper:#FBF8F2;
+  --ink:#1B1916;
+  --ink-soft:#3A352E;
+  --muted:#7A7266;
+  --line:#DED4C4;
+  --terra:#B0522C;
+  --terra-deep:#8E3F20;
+  --olive:#5E6247;
+  --gold:#B08A3E;
+  --radius:2px;
+  --maxw:1280px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Manrope',system-ui,-apple-system,sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--terra);color:#fff}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1.05}
+.eyebrow{
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+  font-weight:600;color:var(--terra);display:inline-flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--terra);display:inline-block}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  transition:background .5s var(--ease),box-shadow .5s var(--ease),padding .4s var(--ease);
+  padding:22px 0;
+}
+.nav.scrolled{
+  background:rgba(246,241,232,.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 rgba(27,25,22,.08);
+  padding:12px 0;
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;color:#fff;transition:color .4s}
+.nav.scrolled .brand{color:var(--ink)}
+.brand-mark{
+  width:34px;height:34px;border:1px solid currentColor;border-radius:50%;
+  display:grid;place-items:center;font-family:'Fraunces',serif;font-size:15px;
+  letter-spacing:.02em;flex-shrink:0;
+}
+.brand-name{font-family:'Fraunces',serif;font-size:19px;letter-spacing:.01em;line-height:1}
+.brand-sub{font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;opacity:.7;margin-top:3px}
+.nav-links{display:flex;align-items:center;gap:34px}
+.nav-links a{
+  font-size:13px;letter-spacing:.06em;color:rgba(255,255,255,.86);
+  position:relative;padding:4px 0;transition:color .3s;
+}
+.nav.scrolled .nav-links a{color:var(--ink-soft)}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:currentColor;
+  transition:width .35s var(--ease);
+}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:18px}
+.cur-toggle{
+  display:flex;align-items:center;gap:2px;border:1px solid rgba(255,255,255,.35);
+  border-radius:100px;padding:3px;transition:border-color .4s;
+}
+.nav.scrolled .cur-toggle{border-color:var(--line)}
+.cur-toggle button{
+  font-size:11px;letter-spacing:.08em;padding:5px 10px;border-radius:100px;
+  color:rgba(255,255,255,.75);transition:all .3s;
+}
+.nav.scrolled .cur-toggle button{color:var(--muted)}
+.cur-toggle button.active{background:#fff;color:var(--ink)}
+.nav.scrolled .cur-toggle button.active{background:var(--ink);color:var(--cream)}
+.btn-cta{
+  background:var(--terra);color:#fff;font-size:12.5px;letter-spacing:.1em;
+  text-transform:uppercase;font-weight:600;padding:13px 24px;border-radius:100px;
+  transition:background .3s,transform .3s;white-space:nowrap;
+}
+.btn-cta:hover{background:var(--terra-deep);transform:translateY(-1px)}
+.burger{display:none;width:40px;height:40px;position:relative;z-index:1001}
+.burger span{position:absolute;left:9px;width:22px;height:1.5px;background:#fff;transition:.35s var(--ease)}
+.nav.scrolled .burger span{background:var(--ink)}
+.burger span:nth-child(1){top:15px}
+.burger span:nth-child(2){top:21px}
+.burger span:nth-child(3){top:27px}
+.burger.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;inset:0;background:var(--cream);z-index:950;
+  display:flex;flex-direction:column;justify-content:center;padding:0 40px;
+  opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{
+  font-family:'Fraunces',serif;font-size:34px;padding:14px 0;
+  border-bottom:1px solid var(--line);color:var(--ink);
+}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#1B1916}
+.hero-bg{position:absolute;inset:0;z-index:0;background:#1B1916}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:heroZoom 18s var(--ease) forwards}
+@keyframes heroZoom{to{transform:scale(1)}}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(20,18,15,.55) 0%,rgba(20,18,15,.18) 38%,rgba(20,18,15,.55) 78%,rgba(20,18,15,.82) 100%);
+}
+.hero-content{position:relative;z-index:2;padding:150px 0 0;color:#fff}
+.hero-eyebrow{color:rgba(255,255,255,.82);font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.hero-eyebrow::before{content:"";width:40px;height:1px;background:rgba(255,255,255,.6)}
+.hero h1{
+  font-family:'Fraunces',serif;font-weight:300;font-size:clamp(44px,7.2vw,104px);
+  line-height:.98;letter-spacing:-.03em;max-width:15ch;margin-bottom:26px;
+}
+.hero h1 em{font-style:italic;color:#E8C9A8}
+.hero-sub{max-width:46ch;font-size:clamp(15px,1.5vw,18px);line-height:1.65;color:rgba(255,255,255,.86);font-weight:300;margin-bottom:34px}
+.hero-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-bottom:56px}
+.btn-primary{
+  background:var(--cream);color:var(--ink);font-size:12.5px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:700;padding:17px 32px;border-radius:100px;
+  transition:transform .3s,background .3s;display:inline-flex;align-items:center;gap:10px;
+}
+.btn-primary:hover{transform:translateY(-2px);background:#fff}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:13px;color:#fff;font-size:12.5px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+}
+.play-ring{
+  width:46px;height:46px;border:1px solid rgba(255,255,255,.5);border-radius:50%;
+  display:grid;place-items:center;transition:.35s var(--ease);
+}
+.btn-ghost:hover .play-ring{background:#fff;border-color:#fff;color:var(--ink);transform:scale(1.06)}
+.play-ring svg{width:11px;height:11px;margin-left:2px}
+
+/* search bar */
+.searchbar{
+  position:relative;z-index:3;background:rgba(251,248,242,.97);
+  backdrop-filter:blur(10px);border-radius:4px;
+  box-shadow:0 30px 70px -20px rgba(20,18,15,.5);
+  display:grid;grid-template-columns:1.3fr 1.1fr 1fr 1fr auto;
+  align-items:stretch;margin-bottom:-46px;overflow:hidden;
+}
+.sb-field{padding:20px 24px;border-right:1px solid var(--line);text-align:left;transition:background .3s}
+.sb-field:hover{background:rgba(176,82,44,.04)}
+.sb-field label{display:block;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:5px}
+.sb-field input,.sb-field select{
+  border:none;background:none;outline:none;width:100%;font-size:14.5px;font-weight:500;
+  color:var(--ink);appearance:none;-webkit-appearance:none;cursor:pointer;
+}
+.sb-field input::placeholder{color:#A79E90;font-weight:400}
+.sb-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237A7266' fill='none' stroke-width='1.4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right center;padding-right:16px}
+.sb-submit{
+  background:var(--ink);color:var(--cream);padding:0 34px;display:flex;align-items:center;
+  gap:10px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  transition:background .3s;
+}
+.sb-submit:hover{background:var(--terra)}
+.sb-submit svg{width:15px;height:15px}
+
+/* ---------- SECTION SHELL ---------- */
+section{position:relative}
+.sec{padding:120px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px;flex-wrap:wrap}
+.sec-head h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(32px,4.4vw,58px);line-height:1.02;letter-spacing:-.025em;max-width:16ch;margin-top:18px}
+.sec-head p{max-width:38ch;color:var(--muted);font-size:15px;line-height:1.7}
+
+/* ---------- DESTINATIONS ---------- */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px}
+.chip{
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  padding:10px 20px;border:1px solid var(--line);border-radius:100px;color:var(--ink-soft);
+  transition:.3s var(--ease);background:transparent;
+}
+.chip:hover{border-color:var(--ink);}
+.chip.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+.grid-dest{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.card{
+  position:relative;background:var(--paper);border:1px solid var(--line);
+  overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+  display:flex;flex-direction:column;
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -30px rgba(27,25,22,.35)}
+.card-img{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--cream-2)}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s var(--ease)}
+.card:hover .card-img img{transform:scale(1.06)}
+.card-tag{
+  position:absolute;top:16px;left:16px;background:rgba(251,248,242,.94);
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  padding:7px 12px;color:var(--ink);
+}
+.card-rating{
+  position:absolute;top:16px;right:16px;background:rgba(27,25,22,.72);
+  backdrop-filter:blur(6px);color:#fff;font-size:11px;font-weight:600;
+  padding:6px 10px;display:flex;align-items:center;gap:5px;
+}
+.card-rating svg{width:10px;height:10px;fill:#E8C9A8}
+.card-body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+.card-loc{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:8px}
+.card-title{font-family:'Fraunces',serif;font-size:25px;font-weight:400;line-height:1.12;letter-spacing:-.015em;margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px}
+.card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+.card-price small{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.card-price b{font-family:'Fraunces',serif;font-size:22px;font-weight:500;letter-spacing:-.01em}
+.card-price span{font-size:11px;color:var(--muted)}
+.card-link{
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  display:inline-flex;align-items:center;gap:7px;color:var(--ink);
+  border-bottom:1px solid var(--ink);padding-bottom:3px;transition:gap .3s,color .3s;
+}
+.card-link:hover{gap:12px;color:var(--terra);border-color:var(--terra)}
+.card.hide{display:none}
+
+/* ---------- ITINERARY PREVIEW ---------- */
+.itin{background:var(--ink);color:var(--cream);overflow:hidden}
+.itin .eyebrow{color:#D9A87F}
+.itin .eyebrow::before{background:#D9A87F}
+.itin-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:start}
+.itin-visual{position:sticky;top:110px}
+.itin-visual .frame{position:relative;aspect-ratio:3/4;overflow:hidden}
+.itin-visual img{width:100%;height:100%;object-fit:cover}
+.itin-visual .badge{
+  position:absolute;bottom:0;left:0;right:0;padding:26px;
+  background:linear-gradient(0deg,rgba(20,18,15,.9),transparent);
+}
+.itin-visual .badge b{font-family:'Fraunces',serif;font-size:22px;font-weight:400;display:block}
+.itin-visual .badge span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(246,241,232,.7)}
+.itin h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(30px,3.8vw,50px);line-height:1.04;letter-spacing:-.025em;margin:18px 0 20px}
+.itin-intro{color:rgba(246,241,232,.66);font-size:15px;line-height:1.75;max-width:44ch;margin-bottom:36px}
+.day{border-top:1px solid rgba(246,241,232,.16)}
+.day:last-child{border-bottom:1px solid rgba(246,241,232,.16)}
+.day-head{display:flex;align-items:center;gap:20px;padding:22px 0;width:100%;text-align:left;transition:opacity .3s}
+.day-head:hover{opacity:.75}
+.day-num{font-family:'Fraunces',serif;font-size:13px;color:#D9A87F;letter-spacing:.1em;min-width:52px}
+.day-title{font-family:'Fraunces',serif;font-size:20px;font-weight:400;flex:1;letter-spacing:-.01em}
+.day-plus{width:22px;height:22px;position:relative;flex-shrink:0}
+.day-plus::before,.day-plus::after{content:"";position:absolute;background:rgba(246,241,232,.7);transition:transform .35s var(--ease)}
+.day-plus::before{top:10px;left:0;width:22px;height:1px}
+.day-plus::after{left:10px;top:0;width:1px;height:22px}
+.day.open .day-plus::after{transform:rotate(90deg)}
+.day-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.day-body-inner{padding:0 0 26px 72px}
+.day-body p{font-size:14px;line-height:1.75;color:rgba(246,241,232,.7);margin-bottom:16px}
+.day-meta{display:flex;gap:26px;flex-wrap:wrap}
+.day-meta div{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,241,232,.5)}
+.day-meta b{display:block;color:var(--cream);font-size:12.5px;letter-spacing:.02em;text-transform:none;margin-top:3px;font-weight:600}
+.itin-cta{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap}
+.btn-outline{
+  border:1px solid rgba(246,241,232,.4);color:var(--cream);font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:15px 28px;
+  border-radius:100px;transition:.3s;
+}
+.btn-outline:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+
+/* ---------- TRUST ---------- */
+.trust{background:var(--cream-2)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:80px}
+.metric{padding:44px 30px;border-right:1px solid var(--line);text-align:center}
+.metric:last-child{border-right:none}
+.metric b{font-family:'Fraunces',serif;font-size:clamp(38px,4.6vw,60px);font-weight:300;line-height:1;letter-spacing:-.03em;display:block;color:var(--ink)}
+.metric b em{font-style:normal;color:var(--terra)}
+.metric span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:12px;font-weight:600}
+.trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+.trust-left h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(30px,3.6vw,46px);line-height:1.06;letter-spacing:-.025em;margin:18px 0 22px}
+.trust-left p{color:var(--muted);font-size:15px;line-height:1.75;margin-bottom:30px;max-width:44ch}
+.badges{display:flex;flex-wrap:wrap;gap:10px}
+.badge-pill{
+  display:inline-flex;align-items:center;gap:9px;background:var(--paper);
+  border:1px solid var(--line);padding:11px 16px;font-size:12px;font-weight:600;color:var(--ink-soft);
+}
+.badge-pill svg{width:14px;height:14px;stroke:var(--olive);fill:none;stroke-width:1.6}
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:22px;padding:26px 0;border-bottom:1px solid var(--line)}
+.step:first-child{padding-top:0}
+.step-n{font-family:'Fraunces',serif;font-size:14px;color:var(--terra);letter-spacing:.1em;min-width:34px;padding-top:3px}
+.step h4{font-family:'Fraunces',serif;font-size:20px;font-weight:400;margin-bottom:6px;letter-spacing:-.01em}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+/* ---------- TESTIMONIALS ---------- */
+.grid-test{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.test{background:var(--paper);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.test:hover{transform:translateY(-5px);box-shadow:0 26px 50px -30px rgba(27,25,22,.3)}
+.test-img{aspect-ratio:1/1;overflow:hidden;position:relative}
+.test-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.test:hover .test-img img{transform:scale(1.05)}
+.test-verified{
+  position:absolute;bottom:14px;left:14px;background:rgba(251,248,242,.95);
+  display:flex;align-items:center;gap:6px;padding:6px 11px;font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--olive);
+}
+.test-verified svg{width:11px;height:11px;fill:var(--olive)}
+.test-body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
+.stars{display:flex;gap:3px;margin-bottom:14px}
+.stars svg{width:12px;height:12px;fill:var(--gold)}
+.test-quote{font-family:'Fraunces',serif;font-size:17.5px;line-height:1.5;font-weight:400;letter-spacing:-.005em;margin-bottom:20px;flex:1}
+.test-quote::before{content:"“";color:var(--terra);font-size:1.4em;line-height:0;vertical-align:-.15em;margin-right:2px}
+.test-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.test-name{font-size:13px;font-weight:700}
+.test-name span{display:block;font-size:11px;color:var(--muted);font-weight:400;margin-top:2px}
+.test-tag{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--terra);border:1px solid rgba(176,82,44,.3);padding:5px 9px;white-space:nowrap}
+
+/* ---------- BUILDER ---------- */
+.builder{background:var(--paper);border-top:1px solid var(--line)}
+.builder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start}
+.builder-left h2{font-family:'Fraunces',serif;font-weight:300;font-size:clamp(32px,4vw,52px);line-height:1.03;letter-spacing:-.025em;margin:18px 0 22px}
+.builder-left p{color:var(--muted);font-size:15px;line-height:1.75;max-width:40ch;margin-bottom:34px}
+.builder-note{display:flex;gap:14px;padding:18px 0;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft)}
+.builder-note svg{width:17px;height:17px;stroke:var(--terra);fill:none;stroke-width:1.6;flex-shrink:0;margin-top:2px}
+.form-card{background:var(--cream);border:1px solid var(--line);padding:40px}
+.progress{display:flex;gap:8px;margin-bottom:32px}
+.progress-bar{height:2px;flex:1;background:var(--line);position:relative;overflow:hidden}
+.progress-bar i{position:absolute;inset:0;background:var(--terra);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.progress-bar.done i{transform:scaleX(1)}
+.step-label{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px}
+.form-step{display:none}
+.form-step.active{display:block;animation:fadeUp .45s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.form-step h3{font-family:'Fraunces',serif;font-size:26px;font-weight:400;margin-bottom:24px;letter-spacing:-.015em}
+.opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px}
+.opt{
+  border:1px solid var(--line);background:var(--paper);padding:16px 18px;text-align:left;
+  transition:.3s var(--ease);display:flex;flex-direction:column;gap:3px;
+}
+.opt:hover{border-color:var(--ink-soft)}
+.opt.sel{border-color:var(--terra);background:rgba(176,82,44,.06);box-shadow:inset 0 0 0 1px var(--terra)}
+.opt b{font-size:13.5px;font-weight:700}
+.opt span{font-size:11.5px;color:var(--muted)}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:7px}
+.field input,.field select{
+  width:100%;border:1px solid var(--line);background:var(--paper);padding:14px 15px;
+  font-size:14px;line-height:1.4;outline:none;transition:border-color .3s;border-radius:0;
+}
+.field input:focus,.field select:focus{border-color:var(--terra)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-nav{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:26px}
+.btn-back{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);padding:14px 0}
+.btn-back:hover{color:var(--ink)}
+.btn-next{
+  background:var(--ink);color:var(--cream);font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:700;padding:15px 30px;border-radius:100px;
+  transition:background .3s,transform .3s;margin-left:auto;
+}
+.btn-next:hover{background:var(--terra);transform:translateY(-1px)}
+.confirm{display:none;text-align:center;padding:20px 0}
+.confirm.show{display:block;animation:fadeUp .5s var(--ease)}
+.confirm-ring{
+  width:74px;height:74px;border-radius:50%;background:rgba(94,98,71,.12);
+  display:grid;place-items:center;margin:0 auto 24px;
+}
+.confirm-ring svg{width:30px;height:30px;stroke:var(--olive);fill:none;stroke-width:2}
+.confirm h3{font-family:'Fraunces',serif;font-size:30px;font-weight:400;margin-bottom:12px;letter-spacing:-.02em}
+.confirm p{color:var(--muted);font-size:14px;line-height:1.7;max-width:36ch;margin:0 auto 8px}
+.confirm .ref{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);font-weight:700;margin-top:18px}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:var(--cream);padding:90px 0 34px}
+.foot-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.4fr;gap:50px;padding-bottom:60px;border-bottom:1px solid rgba(246,241,232,.14)}
+.foot-brand .brand{color:var(--cream);margin-bottom:20px}
+.foot-brand p{font-size:13.5px;line-height:1.75;color:rgba(246,241,232,.6);max-width:34ch;margin-bottom:24px}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:38px;height:38px;border:1px solid rgba(246,241,232,.22);border-radius:50%;
+  display:grid;place-items:center;transition:.3s;
+}
+.socials a:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.socials svg{width:15px;height:15px;fill:currentColor}
+.foot-col h5{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(246,241,232,.45);font-weight:700;margin-bottom:20px}
+.foot-col a,.foot-col p{display:block;font-size:13.5px;color:rgba(246,241,232,.75);margin-bottom:12px;transition:color .3s}
+.foot-col a:hover{color:#fff}
+.news p{font-size:13px;color:rgba(246,241,232,.6);line-height:1.7;margin-bottom:16px}
+.news-form{display:flex;border-bottom:1px solid rgba(246,241,232,.3);padding-bottom:8px}
+.news-form input{flex:1;background:none;border:none;outline:none;color:var(--cream);font-size:13.5px;padding:6px 0}
+.news-form input::placeholder{color:rgba(246,241,232,.4)}
+.news-form button{color:var(--cream);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:6px 0 6px 14px}
+.news-form button:hover{color:#D9A87F}
+.news-msg{font-size:11.5px;color:#D9A87F;margin-top:10px;min-height:16px}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:28px;flex-wrap:wrap}
+.foot-bottom p{font-size:11.5px;color:rgba(246,241,232,.4);letter-spacing:.04em}
+.foot-bottom div{display:flex;gap:24px}
+.foot-bottom a{font-size:11.5px;color:rgba(246,241,232,.4)}
+.foot-bottom a:hover{color:var(--cream)}
+
+/* ---------- DRAWER ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(20,18,15,.55);backdrop-filter:blur(3px);
+  z-index:1000;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);
+}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--paper);
+  z-index:1001;transform:translateX(100%);transition:transform .55s var(--ease);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.drawer.open{transform:none}
+.drawer-head{position:relative;height:250px;flex-shrink:0;overflow:hidden}
+.drawer-head img{width:100%;height:100%;object-fit:cover}
+.drawer-head::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,18,15,.75),transparent 60%)}
+.drawer-close{
+  position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;
+  background:rgba(251,248,242,.95);display:grid;place-items:center;z-index:2;transition:.3s;
+}
+.drawer-close:hover{transform:rotate(90deg)}
+.drawer-close svg{width:15px;height:15px;stroke:var(--ink);stroke-width:1.8;fill:none}
+.drawer-head-txt{position:absolute;bottom:22px;left:26px;right:26px;color:#fff;z-index:2}
+.drawer-head-txt span{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#E8C9A8;font-weight:700}
+.drawer-head-txt h3{font-family:'Fraunces',serif;font-size:30px;font-weight:400;line-height:1.1;margin-top:6px}
+.drawer-body{padding:28px 26px 34px;overflow-y:auto;flex:1}
+.drawer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:26px}
+.drawer-stats div{background:var(--paper);padding:14px 12px;text-align:center}
+.drawer-stats small{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:700}
+.drawer-stats b{font-family:'Fraunces',serif;font-size:16px;font-weight:500}
+.drawer-body h4{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--terra);font-weight:700;margin:24px 0 12px}
+.drawer-body p{font-size:13.5px;line-height:1.75;color:var(--ink-soft)}
+.dl-day{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.dl-day:last-child{border-bottom:none}
+.dl-day b{font-family:'Fraunces',serif;font-size:12px;color:var(--terra);min-width:44px;padding-top:2px}
+.dl-day span{font-size:13px;line-height:1.6;color:var(--ink-soft)}
+.inc-list{display:flex;flex-wrap:wrap;gap:8px}
+.inc-list span{font-size:11.5px;background:var(--cream-2);padding:7px 12px;color:var(--ink-soft)}
+.drawer-foot{padding:18px 26px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--paper);flex-shrink:0}
+.drawer-foot .p b{font-family:'Fraunces',serif;font-size:24px;font-weight:500}
+.drawer-foot .p small{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.drawer-foot button{background:var(--terra);color:#fff;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:14px 24px;border-radius:100px;transition:background .3s}
+.drawer-foot button:hover{background:var(--terra-deep)}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:1080px){
+  .wrap{padding:0 28px}
+  .nav-links{display:none}
+  .burger{display:block}
+  .cur-toggle{display:none}
+  .grid-dest{grid-template-columns:repeat(2,1fr)}
+  .itin-grid{grid-template-columns:1fr;gap:44px}
+  .itin-visual{position:static;max-width:420px}
+  .trust-grid{grid-template-columns:1fr;gap:50px}
+  .grid-test{grid-template-columns:1fr 1fr}
+  .builder-grid{grid-template-columns:1fr;gap:44px}
+  .foot-top{grid-template-columns:1fr 1fr;gap:40px}
+  .searchbar{grid-template-columns:1fr 1fr;margin-bottom:-30px}
+  .sb-field:nth-child(2){border-right:none}
+  .sb-field:nth-child(1),.sb-field:nth-child(2){border-bottom:1px solid var(--line)}
+  .sb-submit{grid-column:1/-1;justify-content:center;padding:18px}
+  .metrics{grid-template-columns:1fr 1fr}
+  .metric:nth-child(2){border-right:none}
+  .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--line)}
+}
+@media(max-width:720px){
+  .wrap{padding:0 20px}
+  .sec{padding:80px 0}
+  .hero{min-height:auto;padding-bottom:0}
+  .hero-content{padding:130px 0 0}
+  .hero h1{font-size:clamp(38px,11vw,58px)}
+  .hero-actions{gap:18px;margin-bottom:40px}
+  .btn-primary{padding:15px 26px;font-size:11.5px}
+  .searchbar{grid-template-columns:1fr;margin-bottom:0;border-radius:0;box-shadow:none;background:var(--paper)}
+  .sb-field{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  .sb-submit{padding:18px}
+  .grid-dest{grid-template-columns:1fr;gap:20px}
+  .grid-test{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr 1fr}
+  .metric{padding:30px 16px}
+  .metric b{font-size:40px}
+  .sec-head{margin-bottom:36px}
+  .form-card{padding:26px 20px}
+  .opt-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .foot-top{grid-template-columns:1fr;gap:34px}
+  .foot-bottom{flex-direction:column;align-items:flex-start;gap:14px}
+  .day-body-inner{padding-left:0}
+  .day-num{min-width:44px}
+  .drawer{width:100%}
+  .drawer-head{height:200px}
+  .mobile-menu a{font-size:28px}
+  .brand-name{font-size:17px}
+  .nav-right .btn-cta{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark">AV</span>
+      <span>
+        <span class="brand-name">Atelier Voyage</span>
+        <span class="brand-sub">Bespoke Journeys</span>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#destinations">Destinations</a>
+      <a href="#packages">Packages</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <div class="cur-toggle" id="curToggle" role="group" aria-label="Currency">
+        <button data-cur="USD" class="active">USD</button>
+        <button data-cur="EUR">EUR</button>
+        <button data-cur="GBP">GBP</button>
+      </div>
+      <a href="#builder" class="btn-cta">Plan My Trip</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#destinations">Destinations</a>
+  <a href="#packages">Packages</a>
+  <a href="#reviews">Reviews</a>
+  <a href="#contact">Contact</a>
+  <a href="#builder" style="color:var(--terra)">Plan My Trip →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="images/hero.jpg" alt="Cliffside infinity pool overlooking the Mediterranean at golden hour" fetchpriority="high" />
+  </div>
+  <div class="wrap hero-content">
+    <div class="hero-eyebrow">Est. 2011 · 42 Countries</div>
+    <h1>Journeys composed,<br><em>not booked.</em></h1>
+    <p class="hero-sub">Private itineraries designed around how you actually want to travel — the right villa, the quiet table, the guide who knows the back door. One atelier, one point of contact, zero templates.</p>
+    <div class="hero-actions">
+      <a href="#packages" class="btn-primary">Explore Packages
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="btn-ghost" id="showreelBtn">
+        <span class="play-ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        Watch Showreel
+      </button>
+    </div>
+  </div>
+  <div class="wrap" style="position:relative;z-index:3">
+    <form class="searchbar" id="quickSearch" onsubmit="return false;">
+      <div class="sb-field">
+        <label for="qDest">Destination</label>
+        <input id="qDest" list="destList" placeholder="Where to?" autocomplete="off" />
+        <datalist id="destList">
+          <option value="Santorini, Greece"></option>
+          <option value="Kyoto, Japan"></option>
+          <option value="Serengeti, Tanzania"></option>
+          <option value="Maldives"></option>
+          <option value="Swiss Alps"></option>
+          <option value="Marrakech, Morocco"></option>
+          <option value="Amalfi Coast, Italy"></option>
+        </datalist>
+      </div>
+      <div class="sb-field">
+        <label for="qDates">Dates</label>
+        <input id="qDates" type="text" placeholder="Add dates" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'" />
+      </div>
+      <div class="sb-field">
+        <label for="qTrav">Travellers</label>
+        <select id="qTrav">
+          <option>2 travellers</option>
+          <option>1 traveller</option>
+          <option>3 travellers</option>
+          <option>4 travellers</option>
+          <option>5+ travellers</option>
+        </select>
+      </div>
+      <div class="sb-field">
+        <label for="qBudget">Budget</label>
+        <select id="qBudget">
+          <option>Any budget</option>
+          <option>$3k – $6k</option>
+          <option>$6k – $12k</option>
+          <option>$12k – $25k</option>
+          <option>$25k+</option>
+        </select>
+      </div>
+      <button class="sb-submit" id="sbSubmit" type="submit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        Search
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="sec" id="destinations" style="padding-top:150px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">The Collection</span>
+        <h2>Places we know<br>by heart.</h2>
+      </div>
+      <p>Seven signature regions, each with a resident fixer, a short list of houses we trust, and an itinerary we've refined over a decade of sending people there.</p>
+    </div>
+    <div class="filters reveal" id="filters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="honeymoon">Honeymoon</button>
+      <button class="chip" data-filter="adventure">Adventure</button>
+      <button class="chip" data-filter="family">Family</button>
+      <button class="chip" data-filter="luxury">Luxury</button>
+    </div>
+    <div class="grid-dest" id="destGrid"></div>
+  </div>
+</section>
+
+<!-- ITINERARY PREVIEW -->
+<section class="sec itin" id="packages">
+  <div class="wrap">
+    <div class="itin-grid">
+      <div class="itin-visual reveal">
+        <div class="frame">
+          <img src="images/kyoto.jpg" alt="Bamboo path and temple gate in Kyoto" loading="lazy" />
+          <div class="badge">
+            <span>Signature Journey</span>
+            <b>Kyoto in Nine Days</b>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d1">
+        <span class="eyebrow">How We Plan</span>
+        <h2>Every day,<br>already thought through.</h2>
+        <p class="itin-intro">This is a real itinerary, not a brochure. Open any day to see the pace, the hotel tier and exactly what's included — the same document you'd receive before you pay a deposit.</p>
+        <div id="dayList"></div>
+        <div class="itin-cta">
+          <a href="#builder" class="btn-outline">Build My Itinerary</a>
+          <button class="btn-outline" id="openKyoto">View Full Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="sec trust" id="why">
+  <div class="wrap">
+    <div class="metrics reveal">
+      <div class="metric"><b>2,<em>400</em>+</b><span>Journeys Planned</span></div>
+      <div class="metric"><b>4.9<em>/5</em></b><span>Client Rating</span></div>
+      <div class="metric"><b>24<em>/7</em></b><span>Concierge Support</span></div>
+      <div class="metric"><b>96<em>%</em></b><span>Book Again</span></div>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-left reveal">
+        <span class="eyebrow">Why Travel With Us</span>
+        <h2>One atelier.<br>Every detail handled.</h2>
+        <p>We don't resell packages. We hold the relationships — with the villa owners, the private guides, the airlines — so that when something shifts, it's fixed before you notice. Visas, flights, transfers and hotels are all ours to manage.</p>
+        <div class="badges">
+          <span class="badge-pill"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>Visa Handling</span>
+          <span class="badge-pill"><svg viewBox="0 0 24 24"><path d="M2 12l20-8-8 20-2-8-10-4z"/></svg>Flight Coordination</span>
+          <span class="badge-pill"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg>Hotel &amp; Villa Curation</span>
+          <span class="badge-pill"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>Private Guides</span>
+          <span class="badge-pill"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Travel Insurance</span>
+        </div>
+      </div>
+      <div class="steps reveal d1">
+        <div class="step">
+          <span class="step-n">01</span>
+          <div><h4>A conversation, not a form</h4><p>Thirty minutes with your dedicated planner. We learn the pace you like, the things you'd rather skip, and the one splurge that matters.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-n">02</span>
+          <div><h4>A draft within 48 hours</h4><p>A full day-by-day itinerary with real hotels, real prices and honest trade-offs. Two revisions included, no charge.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-n">03</span>
+          <div><h4>Transparent booking</h4><p>One invoice, itemised. A 20% deposit holds everything; the balance is due 45 days out. No hidden agency fees, ever.</p></div>
+        </div>
+        <div class="step">
+          <span class="step-n">04</span>
+          <div><h4>On the ground, on call</h4><p>Your planner's direct line, 24/7, for the whole trip. Delayed flight at 2am? We've already rebooked you.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Traveller Stories</span>
+        <h2>They came back<br>different.</h2>
+      </div>
+      <p>Every review below is from a verified booking. We publish them unedited — including the ones that taught us something.</p>
+    </div>
+    <div class="grid-test" id="testGrid"></div>
+  </div>
+</section>
+
+<!-- BUILDER -->
+<section class="sec builder" id="builder">
+  <div class="wrap">
+    <div class="builder-grid">
+      <div class="builder-left reveal">
+        <span class="eyebrow">Start Planning</span>
+        <h2>Tell us the shape<br>of the trip.</h2>
+        <p>Three questions, ninety seconds. A real planner — not a bot — reads every submission and replies within one business day with a first draft.</p>
+        <div class="builder-note">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>No deposit, no obligation. Your details are never sold or shared.</span>
+        </div>
+        <div class="builder-note">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Average first response: 4 hours during business days.</span>
+        </div>
+        <div class="builder-note">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Fully bonded &amp; IATA-accredited. Your money is protected.</span>
+        </div>
+      </div>
+
+      <div class="form-card reveal d1">
+        <div class="progress" id="progress">
+          <div class="progress-bar done"><i></i></div>
+          <div class="progress-bar"><i></i></div>
+          <div class="progress-bar"><i></i></div>
+        </div>
+
+        <form id="tripForm" novalidate>
+          <!-- STEP 1 -->
+          <div class="form-step active" data-step="1">
+            <div class="step-label">Step 1 of 3</div>
+            <h3>What kind of trip?</h3>
+            <div class="opt-grid" data-group="vibe">
+              <button type="button" class="opt" data-val="Honeymoon"><b>Honeymoon</b><span>Slow, private, romantic</span></button>
+              <button type="button" class="opt" data-val="Adventure"><b>Adventure</b><span>Active, remote, wild</span></button>
+              <button type="button" class="opt" data-val="Family"><b>Family</b><span>Easy pace, everyone happy</span></button>
+              <button type="button" class="opt" data-val="Luxury"><b>Pure Luxury</b><span>Best of everything</span></button>
+            </div>
+            <div class="field">
+              <label for="fDest">Where are you drawn to?</label>
+              <input id="fDest" placeholder="e.g. Japan in autumn, or 'surprise us'" />
+            </div>
+            <div class="form-nav">
+              <span></span>
+              <button type="button" class="btn-next" data-next="2">Continue</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="form-step" data-step="2">
+            <div class="step-label">Step 2 of 3</div>
+            <h3>Budget &amp; timing</h3>
+            <div class="opt-grid" data-group="budget">
+              <button type="button" class="opt" data-val="$3k – $6k"><b>$3k – $6k</b><span>Per person</span></button>
+              <button type="button" class="opt" data-val="$6k – $12k"><b>$6k – $12k</b><span>Per person</span></button>
+              <button type="button" class="opt" data-val="$12k – $25k"><b>$12k – $25k</b><span>Per person</span></button>
+              <button type="button" class="opt" data-val="$25k+"><b>$25k+</b><span>Per person</span></button>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="fMonth">Travel month</label>
+                <select id="fMonth">
+                  <option value="">Select month</option>
+                  <option>January</option><option>February</option><option>March</option>
+                  <option>April</option><option>May</option><option>June</option>
+                  <option>July</option><option>August</option><option>September</option>
+                  <option>October</option><option>November</option><option>December</option>
+                  <option>Flexible</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="fNights">Nights</label>
+                <select id="fNights">
+                  <option>7 – 9 nights</option>
+                  <option>4 – 6 nights</option>
+                  <option>10 – 14 nights</option>
+                  <option>15+ nights</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn-back" data-back="1">← Back</button>
+              <button type="button" class="btn-next" data-next="3">Continue</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="form-step" data-step="3">
+            <div class="step-label">Step 3 of 3</div>
+            <h3>Where do we reach you?</h3>
+            <div class="field">
+              <label for="fName">Full name</label>
+              <input id="fName" placeholder="Your name" required />
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="fEmail">Email</label>
+                <input id="fEmail" type="email" placeholder="you@email.com" required />
+              </div>
+              <div class="field">
+                <label for="fPhone">WhatsApp</label>
+                <input id="fPhone" type="tel" placeholder="+1 555 000 0000" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="fNotes">Anything else? (optional)</label>
+              <input id="fNotes" placeholder="Dietary needs, celebrations, must-dos…" />
+            </div>
+            <div class="form-nav">
+              <button type="button" class="btn-back" data-back="2">← Back</button>
+              <button type="submit" class="btn-next">Request My Itinerary</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="confirm" id="confirm">
+          <div class="confirm-ring">
+            <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg>
+          </div>
+          <h3>Request received.</h3>
+          <p id="confirmText">Thank you — your planner will reply within one business day with a first draft.</p>
+          <p class="ref" id="confirmRef">Reference AV-000000</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a href="#top" class="brand">
+          <span class="brand-mark">AV</span>
+          <span>
+            <span class="brand-name">Atelier Voyage</span>
+            <span class="brand-sub">Bespoke Journeys</span>
+          </span>
+        </a>
+        <p>A small atelier of eleven planners, designing private journeys across 42 countries since 2011. We take on 200 trips a year — no more.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 3.2A6.6 6.6 0 1 0 12 18.6 6.6 6.6 0 0 0 12 5.4zm0 10.9a4.3 4.3 0 1 1 0-8.6 4.3 4.3 0 0 1 0 8.6zm6.9-11.1a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></a>
+          <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.6 2.2-.9 3.4-.2 1 .5 1.9 1.5 1.9 1.8 0 3.2-1.9 3.2-4.7 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.6 2.1-4.6 4.4 0 .9.3 1.8.8 2.3.1.1.1.2.1.3l-.3 1.1c0 .2-.1.2-.3.1-1.2-.6-2-2.4-2-3.9 0-3.2 2.3-6.1 6.7-6.1 3.5 0 6.2 2.5 6.2 5.8 0 3.5-2.2 6.3-5.2 6.3-1 0-2-.5-2.3-1.2l-.6 2.4c-.2.9-.8 2-1.2 2.6A10 10 0 1 0 12 2z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Explore</h5>
+        <a href="#destinations">Destinations</a>
+        <a href="#packages">Curated Packages</a>
+        <a href="#reviews">Traveller Stories</a>
+        <a href="#builder">Plan a Trip</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <p>hello@ateliervoyage.com</p>
+        <p>+44 20 7946 0812</p>
+        <p>18 Marylebone Lane<br>London W1U 2NF</p>
+      </div>
+      <div class="foot-col news">
+        <h5>The Dispatch</h5>
+        <p>One letter a month: a place worth going, a hotel worth the flight, and nothing else.</p>
+        <form class="news-form" id="newsForm">
+          <input type="email" id="newsEmail" placeholder="Your email" aria-label="Email" required />
+          <button type="submit">Join</button>
+        </form>
+        <div class="news-msg" id="newsMsg"></div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Atelier Voyage Ltd. All rights reserved.</p>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Booking Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- DRAWER -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <img id="dImg" src="images/santorini.jpg" alt="" />
+    <button class="drawer-close" id="drawerClose" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="drawer-head-txt">
+      <span id="dLoc">Greece</span>
+      <h3 id="dTitle">Santorini</h3>
+    </div>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-stats">
+      <div><small>Duration</small><b id="dDur">8 days</b></div>
+      <div><small>Hotel Tier</small><b id="dTier">5★</b></div>
+      <div><small>From</small><b id="dPrice">$4,200</b></div>
+    </div>
+    <h4>The Idea</h4>
+    <p id="dDesc"></p>
+    <h4>Day by Day</h4>
+    <div id="dDays"></div>
+    <h4>What's Included</h4>
+    <div class="inc-list" id="dInc"></div>
+  </div>
+  <div class="drawer-foot">
+    <div class="p"><small>From, per person</small><b id="dPrice2">$4,200</b></div>
+    <button id="dCta">Request This Trip</button>
+  </div>
+</aside>
+
+<script>
+/* ============ DATA ============ */
+const PACKAGES = [
+  {
+    id:'santorini', name:'Santorini', loc:'Cyclades, Greece', tag:'Honeymoon', tags:['honeymoon','luxury'],
+    img:'images/santorini.jpg', price:4200, days:8, rating:4.9, tier:'5★ Caldera Suites',
+    desc:'Whitewashed caldera suites, a private catamaran at sunset, and a chef who cooks in your terrace kitchen. Built for two, paced for slow mornings.',
+    daysList:[
+      ['Day 1','Arrival & caldera suite check-in, sunset dinner on the terrace'],
+      ['Day 2','Private sailing to Thirassia with lunch aboard'],
+      ['Day 3','Oia at dawn, then a wine estate tasting in Pyrgos'],
+      ['Day 4','Free day — spa, pool, nothing at all'],
+      ['Day 5','Cooking class with a local chef, market walk in Fira'],
+      ['Day 6','Helicopter transfer to a hidden beach cove'],
+      ['Day 7','Farewell dinner at a clifftop table for two'],
+      ['Day 8','Private transfer to Santorini airport']
+    ],
+    inc:['5★ caldera suite, 7 nights','Private airport transfers','Sunset catamaran charter','Daily breakfast & 3 dinners','Local concierge on call']
+  },
+  {
+    id:'kyoto', name:'Kyoto', loc:'Kansai, Japan', tag:'Luxury', tags:['luxury','honeymoon'],
+    img:'images/kyoto.jpg', price:6800, days:9, rating:5.0, tier:'Ryokan + 5★',
+    desc:'A machiya townhouse, two ryokan nights with private onsen, and a tea master who has been doing this for forty years. Autumn leaves or cherry blossom — both work.',
+    daysList:[
+      ['Day 1','Arrival, machiya townhouse in Gion'],
+      ['Day 2','Fushimi Inari at first light, then Nishiki market'],
+      ['Day 3','Private tea ceremony with a 40-year master'],
+      ['Day 4','Arashiyama bamboo grove & riverside lunch'],
+      ['Day 5','Transfer to Hakone ryokan, private onsen'],
+      ['Day 6','Mount Fuji views, kaiseki dinner in-room'],
+      ['Day 7','Return to Kyoto, free afternoon'],
+      ['Day 8','Craft workshop — indigo dyeing with a artisan'],
+      ['Day 9','Private transfer to Kansai airport']
+    ],
+    inc:['Machiya townhouse, 6 nights','Ryokan with private onsen, 2 nights','JR rail passes, first class','Private guide, 4 days','All breakfasts & 4 kaiseki dinners']
+  },
+  {
+    id:'serengeti', name:'Serengeti', loc:'Tanzania', tag:'Adventure', tags:['adventure','family'],
+    img:'images/serengeti.jpg', price:8900, days:10, rating:4.9, tier:'Luxury Tented Camp',
+    desc:'Migration-season camps, a private vehicle and guide, and balloon flights at dawn. The kind of trip that resets what you think a holiday is.',
+    daysList:[
+      ['Day 1','Arrival Kilimanjaro, transfer to Arusha lodge'],
+      ['Day 2','Fly to Serengeti, afternoon game drive'],
+      ['Day 3','Dawn balloon flight over the plains'],
+      ['Day 4','Full-day migration tracking, private vehicle'],
+      ['Day 5','Transfer to Ngorongoro Crater rim'],
+      ['Day 6','Crater floor descent, picnic lunch'],
+      ['Day 7','Maasai village visit, cultural afternoon'],
+      ['Day 8','Lake Manyara, tree-climbing lions'],
+      ['Day 9','Return to Arusha, farewell dinner'],
+      ['Day 10','Transfer to Kilimanjaro airport']
+    ],
+    inc:['Luxury tented camps, 9 nights','Private 4x4 & guide throughout','Hot air balloon safari','All park & conservancy fees','Internal bush flights']
+  },
+  {
+    id:'maldives', name:'Maldives', loc:'Baa Atoll', tag:'Honeymoon', tags:['honeymoon','luxury','family'],
+    img:'images/maldives.jpg', price:5600, days:7, rating:4.8, tier:'Overwater Villa',
+    desc:'An overwater villa with a private pool, a house reef full of turtles, and a marine biologist on call. Barefoot luxury with nothing to decide.',
+    daysList:[
+      ['Day 1','Seaplane transfer, overwater villa check-in'],
+      ['Day 2','House reef snorkel with marine biologist'],
+      ['Day 3','Sunset dolphin cruise'],
+      ['Day 4','Private sandbank picnic for two'],
+      ['Day 5','Spa day & floating breakfast'],
+      ['Day 6','Manta ray excursion to Hanifaru Bay'],
+      ['Day 7','Seaplane back to Malé']
+    ],
+    inc:['Overwater villa with pool, 6 nights','Return seaplane transfers','Full board dining','Snorkel gear & guided reef trips','Marine biologist sessions']
+  },
+  {
+    id:'alps', name:'Swiss Alps', loc:'Zermatt, Switzerland', tag:'Adventure', tags:['adventure','family','luxury'],
+    img:'images/alps.jpg', price:5100, days:8, rating:4.9, tier:'5★ Chalet',
+    desc:'A private chalet with a sauna and Matterhorn views, guided glacier hikes, and a train journey that is genuinely worth the ticket on its own.',
+    daysList:[
+      ['Day 1','Arrival Zurich, scenic train to Zermatt'],
+      ['Day 2','Chalet check-in, village orientation walk'],
+      ['Day 3','Guided glacier hike with mountain guide'],
+      ['Day 4','Gornergrat railway & Matterhorn viewpoints'],
+      ['Day 5','Paragliding over the valley (optional)'],
+      ['Day 6','Glacier Express to St. Moritz'],
+      ['Day 7','Lake walk & spa afternoon'],
+      ['Day 8','Return transfer to Zurich']
+    ],
+    inc:['Private 5★ chalet, 7 nights','Glacier Express first class','Certified mountain guide, 2 days','All lift passes','Daily breakfast & 3 dinners']
+  },
+  {
+    id:'marrakech', name:'Marrakech', loc:'Morocco', tag:'Family', tags:['family','luxury'],
+    img:'images/marrakech.jpg', price:3400, days:6, rating:4.7, tier:'Luxury Riad',
+    desc:'A private riad in the medina, a souk guide who knows every doorway, and a day in the Atlas Mountains. Warm, sensory, and easy with children.',
+    daysList:[
+      ['Day 1','Arrival, riad check-in, rooftop dinner'],
+      ['Day 2','Guided medina & souk walk'],
+      ['Day 3','Jardin Majorelle & Yves Saint Laurent museum'],
+      ['Day 4','Day trip to Atlas Mountains & Berber lunch'],
+      ['Day 5','Cooking class & hammam spa'],
+      ['Day 6','Transfer to Marrakech airport']
+    ],
+    inc:['Private luxury riad, 5 nights','Airport transfers','Private medina guide','Atlas Mountains day trip','Daily breakfast & 2 dinners']
+  },
+  {
+    id:'amalfi', name:'Amalfi Coast', loc:'Campania, Italy', tag:'Luxury', tags:['luxury','honeymoon','family'],
+    img:'images/amalfi.jpg', price:4800, days:7, rating:4.9, tier:'5★ Cliffside',
+    desc:'Positano at the right time of day, a wooden gozzo boat along the coast, and a lemon farm lunch that ruins all other lemons for you.',
+    daysList:[
+      ['Day 1','Arrival Naples, private transfer to Positano'],
+      ['Day 2','Boat day along the coast to Capri'],
+      ['Day 3','Path of the Gods hike with a guide'],
+      ['Day 4','Lemon farm lunch & limoncello tasting'],
+      ['Day 5','Ravello & Villa Cimbrone gardens'],
+      ['Day 6','Free day — beach club & spa'],
+      ['Day 7','Private transfer to Naples airport']
+    ],
+    inc:['5★ cliffside hotel, 6 nights','Private transfers throughout','Wooden gozzo boat charter','Guided coastal hike','Daily breakfast & 3 dinners']
+  }
+];
+
+const TESTIMONIALS = [
+  {img:'images/client-1.jpg', name:'Elena Marchetti', meta:'Milan · Santorini, 8 days', tag:'Honeymoon', quote:'They moved our catamaran twice because of wind and never once made it our problem. The itinerary read like someone had already lived the trip.'},
+  {img:'images/client-2.jpg', name:'James Whitfield', meta:'London · Serengeti, 10 days', tag:'Adventure', quote:'Our guide knew where the migration would be three days out. I have travelled a lot. I have never had a trip run this quietly well.'},
+  {img:'images/client-3.jpg', name:'Priya & Arjun Rao', meta:'Singapore · Kyoto, 9 days', tag:'Luxury', quote:'The ryokan night with the private onsen was the single best evening of our lives. They found it, booked it, and told us to do nothing else that day.'}
+];
+
+/* ============ CURRENCY ============ */
+const RATES = {USD:1, EUR:0.92, GBP:0.79};
+const SYM = {USD:'$', EUR:'€', GBP:'£'};
+let CUR = 'USD';
+function fmt(usd){
+  const v = Math.round(usd * RATES[CUR]);
+  return SYM[CUR] + v.toLocaleString('en-US');
+}
+
+/* ============ REVEAL OBSERVER (declared first) ============ */
+let io = null;
+function observeReveals(){
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); return;
+  }
+  if(!io){
+    io = new IntersectionObserver(entries=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  }
+  document.querySelectorAll('.reveal:not(.in)').forEach(el=>io.observe(el));
+}
+
+/* ============ RENDER CARDS ============ */
+const grid = document.getElementById('destGrid');
+function renderCards(){
+  grid.innerHTML = PACKAGES.map((p,i)=>`
+    <article class="card reveal d${i%3}" data-tags="${p.tags.join(' ')}">
+      <div class="card-img">
+        <img src="${p.img}" alt="${p.name}, ${p.loc}" loading="lazy" />
+        <span class="card-tag">${p.tag}</span>
+        <span class="card-rating"><svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>${p.rating.toFixed(1)}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-loc">${p.loc}</div>
+        <h3 class="card-title">${p.name}</h3>
+        <p class="card-desc">${p.desc.split('.')[0]}.</p>
+        <div class="card-foot">
+          <div class="card-price">
+            <small>From · ${p.days} days</small>
+            <b data-usd="${p.price}">${fmt(p.price)}</b> <span>/ person</span>
+          </div>
+          <button class="card-link" data-open="${p.id}">Itinerary
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </article>`).join('');
+  observeReveals();
+}
+renderCards();
+
+/* ============ FILTERS ============ */
+document.getElementById('filters').addEventListener('click', e=>{
+  const b = e.target.closest('.chip'); if(!b) return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  b.classList.add('active');
+  const f = b.dataset.filter;
+  document.querySelectorAll('.card').forEach(card=>{
+    const show = f==='all' || card.dataset.tags.includes(f);
+    card.classList.toggle('hide', !show);
+  });
+});
+
+/* ============ ITINERARY DAYS ============ */
+const KYOTO_DAYS = [
+  ['01','Arrival & the machiya','Private transfer from Kansai, a restored townhouse in Gion with its own courtyard garden. Evening walk to a nine-seat counter for the first dinner.','Machiya townhouse','Airport transfer, dinner'],
+  ['02','Fushimi at first light','We go at 5:40am, before the crowds, with a guide who grew up in the neighbourhood. Breakfast at a market stall, afternoon free.','Machiya townhouse','Guide, breakfast'],
+  ['03','The tea master','A private ceremony in a 120-year-old tea room, then a walk through the philosopher\'s path. Lunch at a temple kitchen.','Machiya townhouse','Ceremony, lunch'],
+  ['04','Arashiyama, slowly','Bamboo grove before 8am, a boat on the river, and a soba lunch that takes two hours because it should.','Machiya townhouse','Guide, boat, lunch'],
+  ['05','Into the mountains','Train to Hakone. Check into a ryokan with a private onsen on the balcony. Kaiseki dinner served in your room.','Ryokan · private onsen','Rail, kaiseki dinner'],
+  ['06','Fuji, if she shows','Morning onsen, then the lake circuit with views of Fuji. Afternoon at the open-air museum. Second kaiseki dinner.','Ryokan · private onsen','Breakfast, dinner'],
+  ['07','Back to Kyoto','Return by rail, free afternoon for shopping on Teramachi. Your planner books a table wherever you point.','Machiya townhouse','Rail, dinner'],
+  ['08','Indigo & craft','A half-day workshop with an indigo dyer, then a visit to a family-run knife shop. Farewell dinner at a Michelin counter.','Machiya townhouse','Workshop, dinner'],
+  ['09','Departure','Slow breakfast, private transfer to Kansai. Your planner confirms the flight the night before.','—','Transfer']
+];
+const dayList = document.getElementById('dayList');
+dayList.innerHTML = KYOTO_DAYS.map((d,i)=>`
+  <div class="day${i===0?' open':''}">
+    <button class="day-head" type="button">
+      <span class="day-num">Day ${d[0]}</span>
+      <span class="day-title">${d[1]}</span>
+      <span class="day-plus"></span>
+    </button>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <p>${d[2]}</p>
+        <div class="day-meta">
+          <div>Stay<b>${d[3]}</b></div>
+          <div>Included<b>${d[4]}</b></div>
+        </div>
+      </div>
+    </div>
+  </div>`).join('');
+
+function setDayHeights(){
+  document.querySelectorAll('.day').forEach(d=>{
+    const body = d.querySelector('.day-body');
+    body.style.maxHeight = d.classList.contains('open') ? body.scrollHeight+'px' : '0px';
+  });
+}
+setDayHeights();
+window.addEventListener('resize', setDayHeights);
+dayList.addEventListener('click', e=>{
+  const head = e.target.closest('.day-head'); if(!head) return;
+  const day = head.parentElement;
+  const wasOpen = day.classList.contains('open');
+  document.querySelectorAll('.day').forEach(d=>d.classList.remove('open'));
+  if(!wasOpen) day.classList.add('open');
+  setDayHeights();
+});
+
+/* ============ TESTIMONIALS ============ */
+document.getElementById('testGrid').innerHTML = TESTIMONIALS.map((t,i)=>`
+  <article class="test reveal d${i}">
+    <div class="test-img">
+      <img src="${t.img}" alt="${t.name}" loading="lazy" />
+      <span class="test-verified"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/></svg>Verified Booking</span>
+    </div>
+    <div class="test-body">
+      <div class="stars">${'<svg viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>'.repeat(5)}</div>
+      <p class="test-quote">${t.quote}</p>
+      <div class="test-meta">
+        <div class="test-name">${t.name}<span>${t.meta}</span></div>
+        <span class="test-tag">${t.tag}</span>
+      </div>
+    </div>
+  </article>`).join('');
+
+/* ============ DRAWER ============ */
+const overlay = document.getElementById('overlay');
+const drawer = document.getElementById('drawer');
+function openDrawer(id){
+  const p = PACKAGES.find(x=>x.id===id); if(!p) return;
+  document.getElementById('dImg').src = p.img;
+  document.getElementById('dImg').alt = p.name;
+  document.getElementById('dLoc').textContent = p.loc;
+  document.getElementById('dTitle').textContent = p.name;
+  document.getElementById('dDur').textContent = p.days+' days';
+  document.getElementById('dTier').textContent = p.tier;
+  document.getElementById('dPrice').textContent = fmt(p.price);
+  document.getElementById('dPrice2').textContent = fmt(p.price);
+  document.getElementById('dDesc').textContent = p.desc;
+  document.getElementById('dDays').innerHTML = p.daysList.map(d=>`<div class="dl-day"><b>${d[0]}</b><span>${d[1]}</span></div>`).join('');
+  document.getElementById('dInc').innerHTML = p.inc.map(i=>`<span>${i}</span>`).join('');
+  drawer.classList.add('open'); overlay.classList.add('open');
+  drawer.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  drawer.classList.remove('open'); overlay.classList.remove('open');
+  drawer.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-open]');
+  if(b) openDrawer(b.dataset.open);
+});
+document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
+document.getElementById('openKyoto').addEventListener('click', ()=>openDrawer('kyoto'));
+document.getElementById('dCta').addEventListener('click', ()=>{
+  closeDrawer();
+  document.getElementById('builder').scrollIntoView({behavior:'smooth'});
+});
+
+/* ============ CURRENCY TOGGLE ============ */
+document.getElementById('curToggle').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  CUR = b.dataset.cur;
+  document.querySelectorAll('#curToggle button').forEach(x=>x.classList.toggle('active', x===b));
+  document.querySelectorAll('[data-usd]').forEach(el=>{ el.textContent = fmt(+el.dataset.usd); });
+  const openId = drawer.classList.contains('open') ? PACKAGES.find(p=>p.name===document.getElementById('dTitle').textContent) : null;
+  if(openId){ document.getElementById('dPrice').textContent = fmt(openId.price); document.getElementById('dPrice2').textContent = fmt(openId.price); }
+});
+
+/* ============ NAV ============ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, {passive:true});
+
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', ()=>{
+  burger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.addEventListener('click', e=>{
+  if(e.target.tagName==='A'){
+    burger.classList.remove('open'); mobileMenu.classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+
+/* ============ REVEAL (observer defined above) ============ */
+observeReveals();
+
+/* ============ QUICK SEARCH ============ */
+document.getElementById('sbSubmit').addEventListener('click', ()=>{
+  const dest = document.getElementById('qDest').value.trim();
+  const budget = document.getElementById('qBudget').value;
+  const fDest = document.getElementById('fDest');
+  if(dest) fDest.value = dest;
+  const budgetMap = {'$3k – $6k':'$3k – $6k','$6k – $12k':'$6k – $12k','$12k – $25k':'$12k – $25k','$25k+':'$25k+'};
+  if(budgetMap[budget]){
+    document.querySelectorAll('[data-group="budget"] .opt').forEach(o=>{
+      o.classList.toggle('sel', o.dataset.val===budget);
+    });
+  }
+  document.getElementById('builder').scrollIntoView({behavior:'smooth'});
+});
+
+/* ============ MULTI-STEP FORM ============ */
+const form = document.getElementById('tripForm');
+const steps = [...document.querySelectorAll('.form-step')];
+const bars = [...document.querySelectorAll('.progress-bar')];
+let current = 1;
+const answers = {vibe:'', budget:''};
+
+function goStep(n){
+  current = n;
+  steps.forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
+  bars.forEach((b,i)=>b.classList.toggle('done', i < n));
+  const card = document.querySelector('.form-card');
+  if(card) card.scrollIntoView({behavior:'smooth', block:'center'});
+}
+form.addEventListener('click', e=>{
+  const opt = e.target.closest('.opt');
+  if(opt){
+    const group = opt.parentElement.dataset.group;
+    opt.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    opt.classList.add('sel');
+    answers[group] = opt.dataset.val;
+    return;
+  }
+  const next = e.target.closest('[data-next]');
+  if(next){ goStep(+next.dataset.next); return; }
+  const back = e.target.closest('[data-back]');
+  if(back){ goStep(+back.dataset.back); return; }
+});
+
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  const name = document.getElementById('fName').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  if(!name || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    if(!name) document.getElementById('fName').style.borderColor = '#B0522C';
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) document.getElementById('fEmail').style.borderColor = '#B0522C';
+    return;
+  }
+  const ref = 'AV-' + String(Math.floor(100000 + Math.random()*900000));
+  const vibe = answers.vibe || 'a bespoke';
+  const month = document.getElementById('fMonth').value || 'your chosen month';
+  document.getElementById('confirmText').textContent =
+    `Thank you, ${name.split(' ')[0]}. Your ${vibe.toLowerCase()} trip for ${month} is with a planner now — expect a first draft within one business day at ${email}.`;
+  document.getElementById('confirmRef').textContent = 'Reference ' + ref;
+  form.style.display = 'none';
+  document.getElementById('progress').style.display = 'none';
+  document.getElementById('confirm').classList.add('show');
+});
+
+/* ============ NEWSLETTER ============ */
+document.getElementById('newsForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const v = document.getElementById('newsEmail').value.trim();
+  const msg = document.getElementById('newsMsg');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ msg.textContent = 'Please enter a valid email.'; return; }
+  msg.textContent = 'You\'re on the list. First dispatch lands next month.';
+  document.getElementById('newsEmail').value = '';
+});
+
+/* ============ SHOWREEL (demo notice) ============ */
+document.getElementById('showreelBtn').addEventListener('click', ()=>{
+  const btn = document.getElementById('showreelBtn');
+  const label = btn.querySelector('span:last-child') || btn;
+  const original = btn.innerHTML;
+  btn.innerHTML = '<span class="play-ring"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span> Showreel coming soon';
+  setTimeout(()=>{ btn.innerHTML = original; }, 2400);
+});
+</script>
+</body>
+</html>
